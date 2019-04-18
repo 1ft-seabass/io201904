@@ -1,0 +1,107 @@
+[
+    {
+        "id": "c4db34a1.93f9a8",
+        "type": "inject",
+        "z": "d3d7f120.bc949",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 230,
+        "y": 400,
+        "wires": [
+            [
+                "94f35ee7.3e378"
+            ]
+        ]
+    },
+    {
+        "id": "dcc8f241.d398d",
+        "type": "http request",
+        "z": "d3d7f120.bc949",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "https://api.soracom.io/v1/devices/<deviceId>/publish",
+        "tls": "",
+        "x": 650,
+        "y": 460,
+        "wires": [
+            [
+                "58b90ebe.959b"
+            ]
+        ]
+    },
+    {
+        "id": "58b90ebe.959b",
+        "type": "debug",
+        "z": "d3d7f120.bc949",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 810,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "498ca07b.93868",
+        "type": "change",
+        "z": "d3d7f120.bc949",
+        "name": "headers device-secret-id",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers.x-device-secret",
+                "pt": "msg",
+                "to": "<device-secret-id>",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 460,
+        "wires": [
+            [
+                "dcc8f241.d398d"
+            ]
+        ]
+    },
+    {
+        "id": "94f35ee7.3e378",
+        "type": "change",
+        "z": "d3d7f120.bc949",
+        "name": "ダミーデータ",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t   \"temperature\":20 + 3 * $random(),\t   \"humidity\":40 + 10 * $random()\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 400,
+        "wires": [
+            [
+                "498ca07b.93868"
+            ]
+        ]
+    }
+]
